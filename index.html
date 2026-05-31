@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Резюме</title>
+
+<style>
+body {
+    background: #000;
+    color: #00ff41;
+    font-family: "JetBrains Mono", monospace;
+    padding: 30px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+#terminal {
+    max-width: 900px;
+}
+
+.cursor {
+    display: inline-block;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.line {
+    white-space: pre-wrap;
+}
+
+a {
+    color: #00ff41;
+    text-decoration: none;
+}
+
+a:hover {
+    text-shadow: 0 0 8px #00ff41;
+}
+
+.command {
+    color: #33ff66;
+}
+
+.section {
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<div id="terminal"></div>
+
+<script>
+
+const lines = [
+
+"> booting portfolio...",
+
+"> access granted",
+
+"",
+
+"> WHO_AM_I",
+
+"__NAME_ANIMATION__",
+
+"Студент и разработчик",
+
+"",
+"> more text incomming...",
+"Я - начинающий разработчик и ученик первого курса УУНИТ.",
+"Люблю писать код, искать интересные решения нестандартных проблем",
+"Моя специализация - Backend, но я хочу вырасти в fullstack разработчика.",
+
+"> skills",
+
+"Python",
+"Java",
+"Kotlin",
+"C++",
+"Linux",
+"Git",
+
+"",
+
+"> projects",
+
+"<a href='https://github.com/Gplay666/GSimpleDiceRandomiser' target='_blank'>G Simple Dice Randomiser</a>",
+"<a href='https://github.com/Gplay666/TUIMusicRecomendator' target='_blank'>TUI Music Recomendator</a>",
+"some more cool stuff on my github page...",
+
+"",
+
+"> github",
+
+"<a href='https://github.com/Gplay666' target='_blank'>github.com/Gplay666</a>",
+
+"",
+
+"> contacts",
+
+"<a href='https://t.me/Gplay666' target='_blank'>telegram: @Gplay666</a>",
+"email: radomir355@gmail.com",
+
+"",
+
+];
+
+const terminal = document.getElementById("terminal");
+
+let lineIndex = 0;
+
+function createLine(text) {
+
+    const div = document.createElement("div");
+    div.className = "line";
+
+    terminal.appendChild(div);
+
+    if (text === "__NAME_ANIMATION__") {
+        animateName(div);
+        return;
+    }
+    let i = 0;
+
+    function type() {
+
+        if (i < text.length) {
+
+            div.innerHTML = text.slice(0, i + 1);
+
+            i++;
+
+            setTimeout(type, 20);
+
+        } else {
+
+            lineIndex++;
+
+            if (lineIndex < lines.length) {
+                setTimeout(() => createLine(lines[lineIndex]), 150);
+            } else {
+                const cursor = document.createElement("span");
+                cursor.className = "cursor";
+                cursor.textContent = "█";
+                terminal.appendChild(cursor);
+            }
+        }
+    }
+
+    type();
+}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function animateName(div) {
+
+    const realName = "Хайбуллин Радомир Айратович";
+    const nickName = "Джи";
+
+
+    for (let i = 0; i <= realName.length; i++) {
+        div.textContent = realName.slice(0, i);
+        await sleep(50);
+    }
+
+
+    await sleep(2000);
+
+
+    for (let i = realName.length; i >= 0; i--) {
+        div.textContent = realName.slice(0, i);
+        await sleep(30);
+    }
+
+    await sleep(300);
+
+
+    for (let i = 0; i <= nickName.length; i++) {
+        div.textContent = nickName.slice(0, i);
+        await sleep(80);
+    }
+
+    lineIndex++;
+
+    setTimeout(() => createLine(lines[lineIndex]), 500);
+}
+
+createLine(lines[0]);
+
+</script>
+
+</body>
+</html>
